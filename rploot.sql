@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:3306
--- Generation Time: 20 Apr 2015 pada 23.34
+-- Generation Time: 25 Apr 2015 pada 12.58
 -- Versi Server: 5.5.40
 -- PHP Version: 5.4.34
 
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `ci_sessions` (
 --
 
 INSERT INTO `ci_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activity`, `user_data`) VALUES
-('3a2c32181370bb59d6cccb6b3901e0c6', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36', 1429597975, '');
+('593c6ca60541a9641fc5e7c522bdab24', '::1', 'Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.90 Safari/537.36', 1429991358, 'a:4:{s:5:"email";s:5:"admin";s:6:"userid";N;s:12:"is_logged_in";b:1;s:8:"is_admin";b:0;}');
 
 -- --------------------------------------------------------
 
@@ -48,11 +48,17 @@ INSERT INTO `ci_sessions` (`session_id`, `ip_address`, `user_agent`, `last_activ
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
-`id` int(9) NOT NULL,
-  `username` varchar(18) NOT NULL,
-  `password` varchar(18) NOT NULL,
-  `privileges` varchar(7) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+`userid` int(3) NOT NULL,
+  `email` varchar(20) NOT NULL,
+  `password` varchar(20) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data untuk tabel `user`
+--
+
+INSERT INTO `user` (`userid`, `email`, `password`) VALUES
+(1, 'admin', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -68,7 +74,7 @@ ALTER TABLE `ci_sessions`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
- ADD PRIMARY KEY (`id`);
+ ADD PRIMARY KEY (`userid`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -78,7 +84,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-MODIFY `id` int(9) NOT NULL AUTO_INCREMENT;
+MODIFY `userid` int(3) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
