@@ -7,10 +7,19 @@ class RoomModel extends CI_Model
         parent::__construct();
     }
 
-    public function get_all($roomID)
+    public function get_by_id($roomID)
     {
         $room = $this->db
             ->get_where('dorm_room', array('roomid' => $roomid))
+            ->result_array();
+
+        return $room;
+    }
+    
+    public function get_all()
+    {
+        $room = $this->db->order_by('nomor')
+            ->get('dorm_room')
             ->result_array();
 
         return $room;
@@ -55,32 +64,17 @@ class RoomModel extends CI_Model
         $this->db->delete('dorm_room', array('roomid' => $roomid));
     }
 
-    public function update($nomor,$fasilitas,$kapasitas)
+    public function update($roomid,$nomor,$fasilitas,$kapasitas)
     {
         $room =  array(
+            'roomid' => $$roomid,
             'nomor' => $nomor, 
             'fasilitas' => $fasilitas, 
             'kapasitas' => $kapasitas
         );
         
-        $this->db->where('nomor',$nomor);
+        $this->db->where('roomid',$roomid);
         $this->db->update('dorm_room', $room);
-    }
-    
-    public function readinput()
-    {
-        $dormRoom=array();
-        $dormRoom["nomor"]=$this->input->post("nomor");
-        $dormRoom["fasilitas"]=$this->input->post("fasilitas");
-        $dormRoom["kapasitas"]=$this->input->post("kapasitas");
-        
-        return $dormRoom;
-    }
-    
-    public function addQuery($query)
-    {
-        $this->db->insert("dorm_room",$query);
-        return (($this->db->addected_rows()>0)?TRUE:FALSE);
     }
 
     

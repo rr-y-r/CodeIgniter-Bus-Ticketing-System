@@ -8,7 +8,7 @@
     <meta name="author" content="">
 
     <title>ASRAMA YPT TELKOM</title>
-    <link href="<?=base_url('assets/tablesorter/themes/blue/tablesorter.css'); ?>" rel="stylesheet">
+    <link href="<?=base_url('assets/tablesorter/tablesorter.css'); ?>" rel="stylesheet">
     <!-- Bootstrap Core CSS -->
     <link href="<?=base_url('assets/css/bootstrap.min.css'); ?>" rel="stylesheet" type="text/css">
 
@@ -18,6 +18,8 @@
     <!-- Squad theme CSS -->
     <link href="<?=base_url('assets/css/style.css'); ?>" rel="stylesheet">
 	<link href="<?=base_url('assets/color/default.css'); ?>" rel="stylesheet">
+    <script src="<?=base_url('assets/js/jquery.js'); ?>"></script>
+    <script src="<?=base_url('assets/js/bootstrap.js'); ?>"></script>
 
 </head>
     <body>

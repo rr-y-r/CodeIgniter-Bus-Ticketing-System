@@ -18,7 +18,11 @@ class Admin extends CI_Controller
     
     public function index()
     {
-        $this->load->view('adminCMS');
+       $dorm = $this->roomModel->get_all();
+        $this->load->view('adminCMS', array(
+            'dorm_room' => $dorm
+        ));
+
     }
     
     public function addRoom()
@@ -69,9 +73,10 @@ class Admin extends CI_Controller
     {
         sleep(1);
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('nomor', 'Nomor', 'required|max_length[3]|numeric');
-        $this->form_validation->set_rules('fasilitas', 'Fasilitas', 'required|max_length[32]|alpha_numeric');
-        $this->form_validation->set_rules('kapasitas', 'Kapasitas', 'required|max_length[3]|numeric');
+        $this->form_validation->set_rules('Roomid', 'Roomid', 'required|max_length[3]|numeric');
+        $this->form_validation->set_rules('Nomor', 'Nomor', 'required|max_length[3]|numeric');
+        $this->form_validation->set_rules('Fasilitas', 'Fasilitas', 'required|max_length[32]|alpha_numeric');
+        $this->form_validation->set_rules('Kapasitas', 'Kapasitas', 'required|max_length[3]|numeric');
         
         if ($this->form_validation->run() == FALSE) 
         {
@@ -80,14 +85,23 @@ class Admin extends CI_Controller
         } 
         else 
         {
-            $this->roomModel->update(
-                $this->input->post('nomor'), 
-                $this->input->post('fasilitas'), 
-                $this->input->post('kapasitas')
+            $is_added = $this->roomModel->update(
+                $this->input->post('Roomid'),
+                $this->input->post('Nomor'), 
+                $this->input->post('Fasilitas'), 
+                $this->input->post('Kapasitas')
             );
             
-            $message = "Editing kamar nomor : <strong>".$this->input->post('nomor')."</strong> berhasil!";
-            $this->json_response(TRUE, $message);
+            if ($is_added) 
+            {
+                $message = "Kamar Nomor : <strong> ".$this->input->post('Nomor')."</strong> berhasil ditambahkan !";
+                $this->json_response(TRUE, $message);
+            } 
+            else 
+            {
+                $message = "Kamar Nomor : <strong> ".$this->input->post('Nomor')."</strong> sudah ada !";
+                $this->json_response(FALSE, $message);
+            }
         }
     }
     
@@ -97,5 +111,6 @@ class Admin extends CI_Controller
             'message' => $message
         )); 
     }
+
     
 }
