@@ -21,5 +21,12 @@ class Site extends CI_Controller
         $this->load->view('home');
     }
     
+    public function rent()
+    {
+        $this->load->view('rent');
+    }
+    
+    
+    
     
 }

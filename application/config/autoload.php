@@ -64,7 +64,7 @@ $autoload['libraries'] = array('database', 'session','encrypt');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('url','file');
+$autoload['helper'] = array('url','file','form','html','text');
 
 
 /*
@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('userModel');
+$autoload['model'] = array('userModel','roomModel');
 
 
 /* End of file autoload.php */

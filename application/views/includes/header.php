@@ -8,7 +8,7 @@
     <meta name="author" content="">
 
     <title>ASRAMA YPT TELKOM</title>
-
+    <link href="<?=base_url('assets/tablesorter/themes/blue/tablesorter.css'); ?>" rel="stylesheet">
     <!-- Bootstrap Core CSS -->
     <link href="<?=base_url('assets/css/bootstrap.min.css'); ?>" rel="stylesheet" type="text/css">
 
