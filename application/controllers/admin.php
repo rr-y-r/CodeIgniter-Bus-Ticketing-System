@@ -18,11 +18,16 @@ class Admin extends CI_Controller
     
     public function index()
     {
-       $dorm = $this->roomModel->get_all();
+        $dorm = $this->roomModel->get_all();
+        //$data = json_encode($dorm);
         $this->load->view('adminCMS', array(
             'dorm_room' => $dorm
         ));
-
+    }
+    
+    public function getDormData()
+    {
+        echo json_encode(array('roomData'=>$this->roomModel->get_all()));
     }
     
     public function addRoom()
@@ -59,7 +64,7 @@ class Admin extends CI_Controller
         }
     }
     
-    public function deleteRoom()
+    public function deleteRoom($id)
     {
         $room = $this->roomModel->getNomor();
         

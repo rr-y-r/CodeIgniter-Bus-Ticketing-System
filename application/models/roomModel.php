@@ -67,7 +67,7 @@ class RoomModel extends CI_Model
     public function update($roomid,$nomor,$fasilitas,$kapasitas)
     {
         $room =  array(
-            'roomid' => $$roomid,
+            'roomid' => $roomid,
             'nomor' => $nomor, 
             'fasilitas' => $fasilitas, 
             'kapasitas' => $kapasitas
