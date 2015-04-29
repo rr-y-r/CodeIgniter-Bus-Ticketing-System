@@ -5,12 +5,16 @@ class Login extends CI_Controller
     
     public function index()
     {
+<<<<<<< HEAD
         
         if (!$this->is_logged_in()) {
             $this->load->view('adminLogin');
         } else {
             redirect('site');
         }
+=======
+        $this->load->view('template/index.php');
+>>>>>>> adamaulia/master
     }
     
     public function loginCheck()
