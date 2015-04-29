@@ -10,11 +10,11 @@
       </div>
       <div class="modal-body">
         <!--BEGIN message for showing error/sucess in adding room-->
-        <div id="success" class="row" style="display: none">
-              <div id="successMessage" class="alert alert-info text-center"></div>
+        <div id="addSuccess" class="row" style="display: none">
+              <div id="addSuccessMessage" class="alert alert-info text-center"></div>
         </div>
-        <div id="error" class="row" style="display: none">
-              <div id="errorMessage" class="alert alert-danger text-center"></div>
+        <div id="addError" class="row" style="display: none">
+              <div id="addErrorMessage" class="alert alert-danger text-center"></div>
         </div>
         <!--END message for showing error/sucess in adding room-->
 

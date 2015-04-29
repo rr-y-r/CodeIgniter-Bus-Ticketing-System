@@ -118,14 +118,14 @@ function loadTable()
             row+='<tr>';
            $.each(d, function(j, e) {
                row+='<td>'+e+'</td>';
-           });
-            if(d !== 0){
-            row+='<td><button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editDormModal<?=$row['roomid']; ?>" >edit</button> <button class="btn btn-sm btn-danger delete" name="roomid" value="<?=$row['nomor']; ?>" onclick="return test()">delete</button></td>';
-            }
+               console.log(d['roomid']);
+           })
+            row+='<td><button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editDormModal'+d['roomid']+'" >edit</button> <button class="btn btn-sm btn-danger delete" name="roomid" value="'+d['nomor']+'" onclick="return test()">delete</button></td>';
+
            row+='</tr>';
            $('#roomTable tbody').fadeIn(1000).append(row);
 
-        });
+        })
     }); 
 };
     
@@ -139,14 +139,11 @@ $(document).ready(function() {
     
     /*END getting table data with json*/
     
-   
-
-    
     $('#formAdd').submit(function() {
       var form = $(this);
       form.children('button').prop('disabled', true);
-      $('#editSucess').hide();
-      $('#editError').hide();
+      $('#addSucess').hide();
+      $('#addError').hide();
 
       var faction = '<?=site_url('admin/addRoom'); ?>';
       var fdata = form.serialize();
@@ -154,13 +151,13 @@ $(document).ready(function() {
       $.post(faction, fdata, function(rdata) {
           var json = jQuery.parseJSON(rdata);
           if (json.isSuccessful) {
-              $('#editSuccessMessage').html(json.message);
-              $('#editSuccess').show();
+              $('#addSuccessMessage').html(json.message);
+              $('#addSuccess').show();
               $('#addDormModal').modal('hide');
               loadTable();
           } else {
-              $('#editErrorMessage').html(json.message);
-              $('#editError').show();
+              $('#addErrorMessage').html(json.message);
+              $('#addError').show();
           }
 
           form.children('button').prop('disabled', false);
@@ -184,6 +181,8 @@ $(document).ready(function() {
           if (json.isSuccessful) {
               $('#editSuccessMessage').html(json.message);
               $('#editSuccess').show();
+              $('#editDormModal').modal('hide');
+              loadTable();
 
           } else {
               $('#editErrorMessage').html(json.message);
