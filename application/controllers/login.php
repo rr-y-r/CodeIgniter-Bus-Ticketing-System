@@ -29,9 +29,18 @@ class Login extends CI_Controller
                 'is_logged_in' => TRUE,
                 'is_admin' => FALSE
             );
+            
+            
 
             $this->session->set_userdata($data);
-            redirect('site');
+            if($data['is_admin'])
+            {
+                redirect('adminLogin');
+            }
+            else
+            {
+                redirect('site');
+            }
         } else 
         {
             redirect('login/error');

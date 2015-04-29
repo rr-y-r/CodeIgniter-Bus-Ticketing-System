@@ -59,18 +59,18 @@ class RoomModel extends CI_Model
 
     public function delete($nomor)
     {
-        $userid = $this->db->get_where('dorm_room', array('nomor' => nomor))->row()->roomid;
-        
-        $this->db->delete('dorm_room', array('roomid' => $roomid));
+        $this->db->where('nomor',$nomor);
+        $this->db->delete('dorm_room');;
     }
 
-    public function update($roomid,$nomor,$fasilitas,$kapasitas)
+    public function update($roomid,$nomor,$fasilitas,$kapasitas,$status)
     {
         $room =  array(
             'roomid' => $roomid,
             'nomor' => $nomor, 
             'fasilitas' => $fasilitas, 
-            'kapasitas' => $kapasitas
+            'kapasitas' => $kapasitas,
+            'status' => $status
         );
         
         $this->db->where('roomid',$roomid);

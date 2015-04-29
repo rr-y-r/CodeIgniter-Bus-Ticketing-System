@@ -14,38 +14,33 @@
                     <th>ID kamar</th> 
                     <th>Nomor</th> 
                     <th>Fasilitas</th> 
-                    <th>Kapasitas</th> 
                     <th>Status</th> 
-                    <th>Tool</th> 
+                    <th>Kapasitas</th> 
+                    <th>Tool</th>
                 </tr> 
                 </thead> 
                 <tbody> 
                     <? foreach($dorm_room as $row): ?>
                         <tr> 
-                            <td><?=$row['roomid']; ?></td> 
-                            <td><?=$row['nomor']; ?></td> 
-                            <td><?=$row['fasilitas']; ?></td> 
-                            <td><?=$row['kapasitas']; ?></td> 
-                            <td>not supported yet</td> 
-                            <td><button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editDormModal<?=$row['roomid']; ?>">edit</button> 
-                                <button class="btn btn-sm btn-danger" onclick="deleteConfirm(<?=$row['roomid']; ?>)">delete</button>
-                            </td> 
+                            
+                            
+                            
                         </tr> 
                     <!--BEGIN Modal For Edit Room-->
                         <div class="modal fade" id="editDormModal<?=$row['roomid']; ?>" tabindex="-1" role="dialog" aria-labelledby="editDormModal" aria-hidden="true">
                           <div class="modal-dialog">
                             <div class="modal-content">
                               <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" ><span aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title" id="myModalLabel">Edit Room ID : <?=$row['roomid']; ?></h4>
                               </div>
                               <div class="modal-body">
                                 <!--BEGIN message for showing error/sucess in adding room-->
-                                <div id="success" class="row" style="display: none">
-                                      <div id="successMessage" class="alert alert-info text-center"></div>
+                                <div id="editSuccess" class="row" style="display: none">
+                                      <div id="editSuccessMessage" class="alert alert-info text-center"></div>
                                 </div>
-                                <div id="error" class="row" style="display: none">
-                                      <div id="errorMessage" class="alert alert-danger text-center"></div>
+                                <div id="editError" class="row" style="display: none">
+                                      <div id="editErrorMessage" class="alert alert-danger text-center"></div>
                                 </div>
                                 <!--END message for showing error/sucess in adding room-->
 
@@ -57,7 +52,7 @@
                                     </div>
                                     <div class="form-group">
                                          <label>Nomor kamar</label>
-                                         <input class="form-control" name="Nomor" type="text" placeholder="Nomor kamar" value="<?=$row['nomor']; ?>" />
+                                         <input class="form-control" name="Nomor" type="paragraph" placeholder="Nomor kamar" value="<?=$row['nomor']; ?>" />
                                     </div>
                                     <div class="form-group">
                                          <label>Fasilitas kamar</label>
@@ -66,6 +61,10 @@
                                     <div class="form-group">
                                          <label>Kapasitas kamar</label>
                                          <input class="form-control" name="Kapasitas" type="text" placeholder="Kapasitas kamar" value="<?=$row['kapasitas']; ?>"/>
+                                    </div>
+                                    <div class="form-group">
+                                         <label>Status kamar</label>
+                                         <input class="form-control" name="Status" type="text" placeholder="Status kamar" value="<?=$row['status']; ?>"/>
                                     </div>
 
                                     <button type="submit" class="btn btn-success btn-large pull-right">Submit</button>
@@ -89,48 +88,65 @@
 </div>
 <script src="<?=base_url('assets/tablesorter/jquery.tablesorter.js'); ?>"></script>
 <script>
-function deleteConfirm($idToDel)
-{
-    console.log($idToDel);
-    var faction = '<?=site_url('admin/deleteRoom/'+$idToDel); ?>';
-    $.post(faction, function(rdata) {
-      var json = jQuery.parseJSON(rdata);
-      if (json.isSuccessful) {
-          $('#successMessage').html(json.message);
-      } else {
-          $('#errorMessage').html(json.message);
-      }
 
-  });
-}
+function test()
+{
+    var confMsg =  confirm("apakah kamu yakin ingin menghapus data ini ?");
+    var roomData = $('.delete').val();
+    var deleteURL = '<?=site_url("admin/deleteRoom"); ?>'+'/'+roomData;
+     if (confMsg == true)
+     {
+         console.log(deleteURL);
+         $.post(deleteURL);
+     }
+    else
+    {
+        console.log('b');
+    }
+    loadTable();
+};
+    
+function loadTable()
+{
+    $('#roomTable tbody').fadeOut(200).empty();
+    var url = '<?=site_url("admin/getDormData"); ?>';
+    $.get(url, function(data){
+        var dormData = jQuery.parseJSON(data);
+        $.each(dormData['roomData'], function (i,d) {
+
+           var row='<tr>';
+            row+='<tr>';
+           $.each(d, function(j, e) {
+               row+='<td>'+e+'</td>';
+           });
+            if(d !== 0){
+            row+='<td><button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editDormModal<?=$row['roomid']; ?>" >edit</button> <button class="btn btn-sm btn-danger delete" name="roomid" value="<?=$row['nomor']; ?>" onclick="return test()">delete</button></td>';
+            }
+           row+='</tr>';
+           $('#roomTable tbody').fadeIn(1000).append(row);
+
+        });
+    }); 
+};
+    
 $(document).ready(function() {
+    
+    loadTable();
     
     $("#roomTable").tablesorter(); 
     
-    /* getting table data with json
-    var url = '<?=site_url('admin/getDormData'); ?>';
-    $.get(url, function(data){
-        var dormData = jQuery.parseJSON(data);
-
-        $.each(dormData['roomData'], function (i,d) {
-            
-           var row='<tr>';
-           $.each(d, function(j, e) {
-              row+='<td>'+e+'</td>';
-           });
-           row+='</tr>';
-           $('#roomTable tbody').append(row);
-            
-        });
-    });
-    */
+    /* getting table data with json*/
+    
+    /*END getting table data with json*/
+    
+   
 
     
     $('#formAdd').submit(function() {
       var form = $(this);
       form.children('button').prop('disabled', true);
-      $('#success').hide();
-      $('#error').hide();
+      $('#editSucess').hide();
+      $('#editError').hide();
 
       var faction = '<?=site_url('admin/addRoom'); ?>';
       var fdata = form.serialize();
@@ -138,11 +154,13 @@ $(document).ready(function() {
       $.post(faction, fdata, function(rdata) {
           var json = jQuery.parseJSON(rdata);
           if (json.isSuccessful) {
-              $('#successMessage').html(json.message);
-              $('#success').show();
+              $('#editSuccessMessage').html(json.message);
+              $('#editSuccess').show();
+              $('#addDormModal').modal('hide');
+              loadTable();
           } else {
-              $('#errorMessage').html(json.message);
-              $('#error').show();
+              $('#editErrorMessage').html(json.message);
+              $('#editError').show();
           }
 
           form.children('button').prop('disabled', false);
@@ -155,8 +173,8 @@ $(document).ready(function() {
     $('.formEdit').submit(function() {
       var form = $(this);
       form.children('button').prop('disabled', true);
-      $('#success').hide();
-      $('#error').hide();
+      $('#editSucess').hide();
+      $('#editError').hide();
 
       var faction = '<?=site_url('admin/editRoom'); ?>';
       var fdata = form.serialize();
@@ -164,12 +182,12 @@ $(document).ready(function() {
       $.post(faction, fdata, function(rdata) {
           var json = jQuery.parseJSON(rdata);
           if (json.isSuccessful) {
-              $('#successMessage').html(json.message);
-              $('#success').show();
+              $('#editSuccessMessage').html(json.message);
+              $('#editSuccess').show();
 
           } else {
-              $('#errorMessage').html(json.message);
-              $('#error').show();
+              $('#editErrorMessage').html(json.message);
+              $('#editError').show();
           }
 
           form.children('button').prop('disabled', false);

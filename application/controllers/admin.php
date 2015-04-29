@@ -64,13 +64,9 @@ class Admin extends CI_Controller
         }
     }
     
-    public function deleteRoom($id)
+    public function deleteRoom($nomor)
     {
-        $room = $this->roomModel->getNomor();
-        
-        $this->load->view('room', array(
-            'room' => room
-        ));
+        $this->roomModel->delete($nomor);
     }
     
     
@@ -82,6 +78,7 @@ class Admin extends CI_Controller
         $this->form_validation->set_rules('Nomor', 'Nomor', 'required|max_length[3]|numeric');
         $this->form_validation->set_rules('Fasilitas', 'Fasilitas', 'required|max_length[32]|alpha_numeric');
         $this->form_validation->set_rules('Kapasitas', 'Kapasitas', 'required|max_length[3]|numeric');
+        $this->form_validation->set_rules('Status', 'Status', 'required|max_length[20]|alpha_numeric');
         
         if ($this->form_validation->run() == FALSE) 
         {
@@ -94,7 +91,8 @@ class Admin extends CI_Controller
                 $this->input->post('Roomid'),
                 $this->input->post('Nomor'), 
                 $this->input->post('Fasilitas'), 
-                $this->input->post('Kapasitas')
+                $this->input->post('Kapasitas'),
+                $this->input->post('Status')
             );
             
             if ($is_added) 
@@ -104,7 +102,7 @@ class Admin extends CI_Controller
             } 
             else 
             {
-                $message = "Kamar Nomor : <strong> ".$this->input->post('Nomor')."</strong> sudah ada !";
+                $message = "Kamar Nomor : <strong> ".$this->input->post('Nomor')."</strong> Edit Error, silahkan cek data anda !";
                 $this->json_response(FALSE, $message);
             }
         }
