@@ -21,25 +21,26 @@ class Login extends CI_Controller
         if($is_user)
         {
             $email = $this->input->post('email');
-            $uid = $this->userModel->get_id($email);
+            $userid = $this->userModel->get_id($email);
+            $level = $this->userModel->isAdmin($email);
+            
+            echo $level;
 
             $data = array(
                 'email' => $email,
                 'userid' => $userid,
                 'is_logged_in' => TRUE,
-                'is_admin' => FALSE
+                'level' => $level
             );
-            
-            
 
             $this->session->set_userdata($data);
-            if($data['is_admin'])
+            if($level == 'admin')
             {
-                redirect('adminLogin');
+                redirect('admin');
             }
             else
             {
-                redirect('site');
+                redirect('mahasiswa');
             }
         } else 
         {

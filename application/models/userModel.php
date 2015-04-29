@@ -31,7 +31,16 @@ class UserModel extends CI_Model
 
         return $users;
     }
-*/    
+*/   
+    public function get_level($email)
+    {
+        $level = $this->db->select('level')
+            ->get_where('user', array('email'=>$email))
+            ->row();
+        
+        return $level->level;
+    }
+    
     public function get_emails()
     {
         $users = $this->db->select('email')
@@ -40,6 +49,14 @@ class UserModel extends CI_Model
             ->result_array();
 
         return $users;
+    }
+    
+    public function isAdmin($email)
+    {
+        $level = $this->db->select('level')
+            ->get_where('user', array('email'=>$email))->row('level');
+        
+        return $level;
     }
 /*
     public function add($name_p,$jenis_kelamin,$tempat,$tanggal_lahir,$phone,$alamat,$email, $password)
