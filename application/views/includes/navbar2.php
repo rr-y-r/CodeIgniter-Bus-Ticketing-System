@@ -1,5 +1,6 @@
 <nav class="navbar navbar-custom bg-dark">
   <div class="container-fluid">
+      <a class="navbar-brand" href="<?=site_url('site'); ?>"><span class="glyphicon glyphicon-home"></span></a>
     <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-collapse collapse">
             <ul class="nav navbar-right">

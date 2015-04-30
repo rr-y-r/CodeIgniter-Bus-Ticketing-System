@@ -35,7 +35,9 @@ class Mahasiswa extends CI_Controller
         $this->form_validation->set_rules('Jenis', 'Jenis', 'required|max_length[13]');
         $this->form_validation->set_rules('Deskripsi', 'Deskripsi', 'required|max_length[32]');
         $this->form_validation->set_rules('Lampiran', 'Lampiran', 'required|max_length[100]');
+        $this->form_validation->set_rules('Status', 'Status', 'required|max_length[100]');
         $this->form_validation->set_rules('file', 'file', 'required|max_length[100]');
+        
         
         $userid = $this->session->userdata('userid');
         
@@ -50,6 +52,7 @@ class Mahasiswa extends CI_Controller
                 $this->input->post('Jenis'), 
                 $this->input->post('Deskripsi'), 
                 $this->input->post('Lampiran'),
+                $this->input->post('Status'),
                 $this->input->post('file'),
                 $userid
             );
@@ -65,6 +68,11 @@ class Mahasiswa extends CI_Controller
                 $this->json_response(FALSE, $message);
             }
         }
+    }
+    
+    public function deleteTicket($ticketid)
+    {
+        $this->ticketModel->delete($ticketid);
     }
     
     

@@ -15,18 +15,32 @@ html {
     width: 100%;
     height: 100%;
 }
+.wuaso{
+    background: #FF3333;
+    color:#FF6666;
+    position: fixed;
+    width: 100%;
+    text-align: center;
+}
 
+
+.headercoeg{
+    padding-top: 60px;
+}
 h1,
 h2,
 h3,
 h4,
 h5,
 h6 {
-    margin: 0 0 30px;
+    margin: 0 0;
     text-transform: uppercase;
     font-family: Montserrat,sans-serif;
     font-weight: 700;
     letter-spacing: 1px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    border-bottom: 1px solid rgba(155,155,155,.2);
 }
 
 p {
@@ -44,6 +58,32 @@ a {
     -webkit-transition: all .2s ease-in-out;
     -moz-transition: all .2s ease-in-out;
     transition: all .2s ease-in-out;
+}
+
+th{
+    color:#fff;
+}
+
+#home-tab{
+    color: #666;
+}
+
+#myTab{
+    padding-top: 29px;
+    font-family: 'Montserrat',sans-serif;
+    color: #fff;
+}
+
+#myTab li a{
+    color: #666;
+}
+
+#myTab li a:hover,
+#myTab  li a:focus,
+#myTab li a.active{
+    background: #FF6666;
+    color: #fff;
+        
 }
 
 a:hover,

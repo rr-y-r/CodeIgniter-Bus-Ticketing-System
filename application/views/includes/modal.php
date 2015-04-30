@@ -1,5 +1,5 @@
 <!--BEGIN Modal For Add Room-->
-<button class="btn btn-default" data-toggle="modal" data-target="#addDormModal">Add room</button>
+<button class="btn btn-default glyphicon glyphicon-plus" data-toggle="modal" data-target="#addDormModal"> Add room</button>
 
 <div class="modal fade" id="addDormModal" tabindex="-1" role="dialog" aria-labelledby="addDormModal" aria-hidden="true">
   <div class="modal-dialog">

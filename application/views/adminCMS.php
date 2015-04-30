@@ -147,6 +147,7 @@ $(document).ready(function() {
 
       var faction = '<?=site_url('admin/addRoom'); ?>';
       var fdata = form.serialize();
+        var notif = '<?=site_url('admin/addRoom'); ?>';
 
       $.post(faction, fdata, function(rdata) {
           var json = jQuery.parseJSON(rdata);
@@ -155,6 +156,7 @@ $(document).ready(function() {
               $('#addSuccess').show();
               $('#addDormModal').modal('hide');
               loadTable();
+
           } else {
               $('#addErrorMessage').html(json.message);
               $('#addError').show();

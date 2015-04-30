@@ -1,17 +1,44 @@
 <? $this->load->view('includes/header'); ?>
-<? $this->load->view('includes/navbar2'); ?>
+<a href="#" class="glyphicon glyphicon-th-list toogleside pull-right" id="menu-toggle"></a>
+<h3 class="text-center wuaso">Sistem penguras waktu tidur</h3>
 <div class="container">
 	<div class="row clearfix">
 		<div class="col-md-12 column">
+            <div id="wrapper">
+
+    <!-- Sidebar -->
+            <div id="sidebar-wrapper">
+                <img class="img-circle img-responsive img-brand" src="<?=base_url('files/1.jpg'); ?>"/>
+                <ul class="sidebar-nav">
+
+                    <li>
+                        <span class="text-success">
+                            <?=anchor('admin', $this->session->userdata('email')); ?> 
+                        </span>
+                    </li>
+                    <li>
+                        <a class="text-danger" style="color:#BA1919;" href="<?=site_url('login/logout'); ?>">Logout</a>
+                    </li>
+                </ul>
+            </div>
             <br>
-            <h1><center>NEED SUPPLY KIT</center></h1>
-            <table id="roomTable" class="table table-striped table-bordered tablesorter"> 
-                <thead> 
+            <br>
+            <br>
+            <br>
+            <h4 class="text-center">Ticket Coeg</h4>
+            
+            <br>
+            <div id="notif" class="row" style="display: none">
+                  <div id="notif" class="alert alert-danger text-center"></div>
+            </div>
+            <table id="roomTable" class="table table-hover table-striped table-condensed"> 
+                <thead style="background-color:#FF6666;"> 
                 <tr> 
                     <th>nomor ticket</th> 
                     <th>Jenis</th> 
                     <th>Deskripsi</th> 
                     <th>lampiran</th> 
+                    <th>Status</th> 
                     <th>file</th> 
                     <th>Action</th> 
                 </tr> 
@@ -52,6 +79,7 @@
                                 <div class="form-group">
                                      <label>Lampiran ticket</label>
                                      <input class="form-control" name="Lampiran" type="text" placeholder="Lampiran ticket" />
+                                    <input class="form-control hidden" name="Status" type="text" value="On Progress" />
                                 </div>
                                 <br>
                                 
@@ -83,7 +111,7 @@
                     </div>
                 </div>
             </div>
-                
+            </div>
         </div>
     </div>
 </div>
@@ -98,6 +126,12 @@ function refresh_files()
     });
 }
     
+$("#menu-toggle").click(function(e) {
+    e.preventDefault();
+    $("#wrapper").toggleClass("toggled");
+});
+
+    
 function loadTable()
 {
     $('#roomTable tbody').fadeOut(200).empty();
@@ -106,8 +140,16 @@ function loadTable()
         var ticketData = jQuery.parseJSON(data);
         $.each(ticketData['ticketData'], function (i,d) {
 
-           var row='<tr>';
-            row+='<tr>';
+           if(d["status"]=='On Progress')
+            {
+                var row='<tr class="danger">';
+                row+='<tr class="danger">';
+            }
+            else
+            {
+                var row='<tr>';
+                row+='<tr>';
+            }
            $.each(d, function(j, e) {
                if(e!=d["file"])
                {
@@ -127,6 +169,24 @@ function loadTable()
         })
     }); 
 };
+    
+function test()
+{
+    var confMsg =  confirm("apakah kamu yakin ingin menghapus data ini ?");
+    var ticketData = $('.delete').val();
+    var deleteURL = '<?=site_url("mahasiswa/deleteTicket"); ?>'+'/'+ticketData;
+     if (confMsg == true)
+     {
+         console.log(deleteURL);
+         $.post(deleteURL);
+     }
+    else
+    {
+        console.log('b');
+    }
+    loadTable();
+};
+    
 $(function() {
     
     $('.formAddTicket').submit(function() {
