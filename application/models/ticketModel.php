@@ -18,11 +18,18 @@ class TicketModel extends CI_Model
     
     public function get_all()
     {
-        $ticket = $this->db->order_by('$ticketid')
+        return $this->db->select()
+                ->get('ticket')
+                ->result();
+    }
+    
+     public function get_user_ticket()
+    {
+        return $this->db->select('ticketid,jenis,deskripsi,lampiran,file')
+            ->order_by('ticketid')
             ->get('ticket')
             ->result_array();
 
-        return $ticket;
     }
 
 
@@ -37,15 +44,14 @@ class TicketModel extends CI_Model
     }
  
 
-    public function add($jenis,$deskripsi,$lampiran,$file)
+    public function add($jenis,$deskripsi,$lampiran,$file,$userid)
     {        
-        $this->db->insert(
-            'ticket', 
-            array(
+        $this->db->insert('ticket', array(
                 'jenis' => $jenis,
                 'deskripsi'=>$deskripsi,
                 'lampiran'=>$lampiran,
-                'file'=>$file
+                'file'=>$file,
+                'userid'=>$userid
             )
         ); 
         return TRUE;

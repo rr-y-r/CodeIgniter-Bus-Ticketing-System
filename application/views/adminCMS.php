@@ -25,9 +25,6 @@
                 <tbody> 
                     <? foreach($dorm_room as $row): ?>
                         <tr> 
-                            
-                            
-                            
                         </tr> 
                     <!--BEGIN Modal For Edit Room-->
                         <div class="modal fade" id="editDormModal<?=$row['roomid']; ?>" tabindex="-1" role="dialog" aria-labelledby="editDormModal" aria-hidden="true">

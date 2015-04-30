@@ -24,6 +24,8 @@ class RoomModel extends CI_Model
 
         return $room;
     }
+    
+   
 
 
     public function get_by_nomor($nomor)

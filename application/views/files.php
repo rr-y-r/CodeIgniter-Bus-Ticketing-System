@@ -14,6 +14,7 @@ if (isset($files) && count($files))
                     <br>
                     <div class="col-sm-6">
                     <span class="text-muted">File Name : <br><?php echo $file->filename?></span>
+                    <input type="text" class="hidden form-control" value="<?php echo $file->filename?>" name="file" />
                     </div>
                     <br>
                     

@@ -4,7 +4,22 @@
 	<div class="row clearfix">
 		<div class="col-md-12 column">
             <br>
-            <h1><center>FUCK YOU</center></h1>
+            <h1><center>NEED SUPPLY KIT</center></h1>
+            <table id="roomTable" class="table table-striped table-bordered tablesorter"> 
+                <thead> 
+                <tr> 
+                    <th>nomor ticket</th> 
+                    <th>Jenis</th> 
+                    <th>Deskripsi</th> 
+                    <th>lampiran</th> 
+                    <th>file</th> 
+                    <th>Action</th> 
+                </tr> 
+                </thead> 
+                <tbody> 
+                    
+                </tbody> 
+            </table> 
             <button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#addTicketModal" >Buat Ticket</button>
             <div class="modal fade" id="addTicketModal" role="dialog" aria-labelledby="addTicketModal" aria-hidden="true">
                 <div class="modal-dialog">
@@ -28,7 +43,7 @@
                                 </div>
                                 <div class="form-group">
                                      <label>Jenis ticket</label>
-                                     <input class="form-control" name="Jenis" type="paragraph" placeholder="Jenis ticket" />
+                                     <input class="form-control" name="Jenis" type="text" placeholder="Jenis ticket" />
                                 </div>
                                 <div class="form-group">
                                      <label>Deskripsi ticket</label>
@@ -82,7 +97,38 @@ function refresh_files()
         $('#files').html(data);
     });
 }
+    
+function loadTable()
+{
+    $('#roomTable tbody').fadeOut(200).empty();
+    var url = '<?=site_url("mahasiswa/getTicketData"); ?>';
+    $.get(url, function(data){
+        var ticketData = jQuery.parseJSON(data);
+        $.each(ticketData['ticketData'], function (i,d) {
+
+           var row='<tr>';
+            row+='<tr>';
+           $.each(d, function(j, e) {
+               if(e!=d["file"])
+               {
+                   row+='<td>'+e+'</td>';
+                }
+               else
+               {
+                   
+               }
+           })
+           row+='<td><img class="img-responsive img-thumbnail img img-square" src="<?=base_url("files");?>'+'/'+ d["file"]+'" style="width:50px;height:50px;"/></td>';
+            row+='<td><button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editDormModal'+d['ticketid']+'" >edit</button> <button class="btn btn-sm btn-danger delete" name="roomid" value="'+d['ticketid']+'" onclick="return test()">delete</button></td>';
+
+           row+='</tr>';
+           $('#roomTable tbody').fadeIn(1000).append(row);
+
+        })
+    }); 
+};
 $(function() {
+    
     $('.formAddTicket').submit(function() {
       var form = $(this);
       form.children('button').prop('disabled', true);
@@ -91,12 +137,14 @@ $(function() {
 
       var faction = '<?=site_url('mahasiswa/addTicket'); ?>';
       var fdata = form.serialize();
+        
 
       $.post(faction, fdata, function(rdata) {
           var json = jQuery.parseJSON(rdata);
           if (json.isSuccessful) {
               $('#addSuccessMessage').html(json.message);
               $('#addSuccess').show();
+              loadTable();
               $('#addDormModal').modal('hide');
           } else {
               $('#addErrorMessage').html(json.message);
@@ -106,9 +154,10 @@ $(function() {
           form.children('button').prop('disabled', false);
           form.children('input[name="name"]').select();
       });
-
+          
       return false;
     });
+    
 	$('#upload').click(function(e) {
 		e.preventDefault();
 		$.ajaxFileUpload({
@@ -128,6 +177,7 @@ $(function() {
 					$('#title').val('');
 				}
 				alert(data.msg);
+                $('#upload').html('re-upload');
 			}
 		});
 		return false;
@@ -138,7 +188,7 @@ $(function() {
 });
     
 $(document).ready(function() {
-    
+    loadTable();
    
 });
 

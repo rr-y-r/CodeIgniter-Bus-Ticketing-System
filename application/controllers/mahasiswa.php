@@ -10,6 +10,7 @@ class Mahasiswa extends CI_Controller
             redirect('login');
         }
         $this->load->model('fileModel');
+        $this->load->model('ticketModel');
     }
     
     private function is_logged_in()
@@ -17,9 +18,12 @@ class Mahasiswa extends CI_Controller
         return $this->session->userdata('is_logged_in');
     }
     
+    public function getTicketData(){
+        echo json_encode(array('ticketData'=>$this->ticketModel->get_user_ticket()));
+    }
+    
     public function index()
     {
-        //$data = json_encode($dorm);
         $this->load->view('mahasiswa');
                 
     }
@@ -31,11 +35,13 @@ class Mahasiswa extends CI_Controller
         $this->form_validation->set_rules('Jenis', 'Jenis', 'required|max_length[13]');
         $this->form_validation->set_rules('Deskripsi', 'Deskripsi', 'required|max_length[32]');
         $this->form_validation->set_rules('Lampiran', 'Lampiran', 'required|max_length[100]');
-        $this->form_validation->set_rules('title', 'title', 'required|max_length[100]');
+        $this->form_validation->set_rules('file', 'file', 'required|max_length[100]');
+        
+        $userid = $this->session->userdata('userid');
         
         if ($this->form_validation->run() == FALSE) 
         {
-            $message = "<strong>Adding</strong> failed!";
+            $message = "apply gagal, tolong cek data ticket";
             $this->json_response(FALSE, $message);
         } 
         else 
@@ -44,17 +50,18 @@ class Mahasiswa extends CI_Controller
                 $this->input->post('Jenis'), 
                 $this->input->post('Deskripsi'), 
                 $this->input->post('Lampiran'),
-                $this->input->post('title')
+                $this->input->post('file'),
+                $userid
             );
             
             if ($is_added) 
             {
-                $message = "Ticket Nomor : <strong> ".$this->input->post('Nomor')."</strong> berhasil diapply !";
+                $message = "Ticket berhasil diapply !";
                 $this->json_response(TRUE, $message);
             } 
             else 
             {
-                $message = "Ticket Nomor : <strong> ".$this->input->post('Nomor')."</strong> sudah ada !";
+                $message = "apply gagal, tolong cek data ticket";
                 $this->json_response(FALSE, $message);
             }
         }
@@ -130,7 +137,7 @@ class Mahasiswa extends CI_Controller
         if ($status != "error")
         {
             $config['upload_path'] = './files/';
-            $config['allowed_types'] = 'gif|jpg|png|doc|txt';
+            $config['allowed_types'] = 'gif|jpg|png|doc|txt|pdf';
             $config['max_size'] = 1024 * 8;
             $config['encrypt_name'] = FALSE;
 

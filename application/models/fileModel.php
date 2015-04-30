@@ -15,8 +15,9 @@ class FileModel extends CI_Model {
     public function get_files()
     {
         return $this->db->select()
-                ->from('files')
-                ->get()
+            ->order_by('id','desc')
+                ->get('files',1)
+                
                 ->result();
     }
     
