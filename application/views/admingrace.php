@@ -31,11 +31,11 @@
             
             <div id="showdata"></div>
                 <br>
-            <h4 class="text-center headercoeg">lately i've been, i've been losing sleep, <br>coding alone in the middle of the night, <br>lately i've been, i've been, coding hard, <br> care no one about project assigntment.  </h4>
+            <h4 class="text-center headercoeg">coeg</h4>
             <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
                 <ul id="myTab" class="nav nav-tabs" role="tablist">
                   <li role="presentation" class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">Manajemen Ticket</a></li>
-                  <li role="presentation" class=""><a href="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">Pengaturan Ticket</a></li>
+
                   <!--
                     <li role="presentation" class="dropdown">
                     <a href="#" id="myTabDrop1" class="dropdown-toggle" data-toggle="dropdown" aria-controls="myTabDrop1-contents" aria-expanded="false">Dropdown <span class="caret"></span></a>
@@ -58,79 +58,90 @@
                             <th>Deskripsi</th> 
                             <th>Lampiran</th> 
                             <th>Status</th> 
+                            <th>Expired</th> 
+                            <th>Pesan</th> 
                             <th>Attachment</th> 
                             <th>Tool</th>
                         </tr> 
                         </thead> 
                         <tbody> 
-                            <? foreach($dorm_room as $row): ?>
-                                <tr> 
-                                </tr> 
-                            <!--BEGIN Modal For Edit Room-->
-                                <div class="modal fade" id="editDormModal<?=$row['roomid']; ?>" tabindex="-1" role="dialog" aria-labelledby="editDormModal" aria-hidden="true">
-                                  <div class="modal-dialog">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" ><span aria-hidden="true">&times;</span></button>
-                                        <h4 class="modal-title" id="myModalLabel">Edit Room ID : <?=$row['roomid']; ?></h4>
-                                      </div>
-                                      <div class="modal-body">
-                                        <!--BEGIN message for showing error/sucess in adding room-->
-                                        <div id="editSuccess" class="row" style="display: none">
-                                              <div id="editSuccessMessage" class="alert alert-info text-center"></div>
-                                        </div>
-                                        <div id="editError" class="row" style="display: none">
-                                              <div id="editErrorMessage" class="alert alert-danger text-center"></div>
-                                        </div>
-                                        <!--END message for showing error/sucess in adding room-->
-
-                                        <!--BEGIN EDIT room form-->
-                                        <form class="formEdit" role="form" accept-charset="utf-8">
-                                            <div class="form-group hidden">
-                                                 <label>ID kamar</label>
-                                                 <input class="form-control" name="Roomid" type="text" placeholder="Nomor kamar" value="<?=$row['roomid']; ?>" />
-                                            </div>
-                                            <div class="form-group">
-                                                 <label>Nomor kamar</label>
-                                                 <input class="form-control" name="Nomor" type="paragraph" placeholder="Nomor kamar" value="<?=$row['nomor']; ?>" />
-                                            </div>
-                                            <div class="form-group">
-                                                 <label>Fasilitas kamar</label>
-                                                 <input class="form-control" name="Fasilitas" type="text" placeholder="Fasilitas kamar" value="<?=$row['fasilitas']; ?>"/>
-                                            </div>
-                                            <div class="form-group">
-                                                 <label>Kapasitas kamar</label>
-                                                 <input class="form-control" name="Kapasitas" type="text" placeholder="Kapasitas kamar" value="<?=$row['kapasitas']; ?>"/>
-                                            </div>
-                                            <div class="form-group">
-                                                 <label>Status kamar</label>
-                                                 <input class="form-control" name="Status" type="text" placeholder="Status kamar" value="<?=$row['status']; ?>"/>
-                                            </div>
-
-                                            <button type="submit" class="btn btn-success btn-large pull-right">Submit</button>
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        </form>
-                                        <!--END EDIT room form-->
-                                      </div>
-                                    </div>
-                                  </div>
+                        <? foreach($ticketData as $row): ?>
+                    <!--BEGIN Modal For Edit Ticket-->
+                        <div class="modal fade" id="editTicketModal<?=$row['ticketid']; ?>" tabindex="-1" role="dialog" aria-labelledby="editTicketModal" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" ><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="myModalLabel">Edit Ticket ID : <?=$row['ticketid']; ?></h4>
+                              </div>
+                              <div class="modal-body">
+                                  <div class="container-fluid">
+                                <!--BEGIN message for showing error/sucess in editing ticket-->
+                                <div id="editSuccess" class="row" style="display: none">
+                                      <div id="editSuccessMessage" class="alert alert-info text-center"></div>
                                 </div>
-                                <!--END Modal For EDIT Room-->
-                            <? endforeach; ?>
+                                <div id="editError" class="row" style="display: none">
+                                      <div id="editErrorMessage" class="alert alert-danger text-center"></div>
+                                </div>
+                                <!--END message for showing error/sucess in editing ticket-->
+
+                                <!--BEGIN EDIT ticket form-->
+                                <form class="formEdit" role="form" accept-charset="utf-8">
+                                    <div class="form-group hidden">
+                                         <label>ID kamar</label>
+                                         <input class="form-control hidden" type="text" name="Ticketid" placeholder="Nomor kamar" value="<?=$row['ticketid']; ?>" />
+                                    </div>
+                                    <div class="form-group">
+                                         <label>Jenis Ticket</label>
+                                         <input class="form-control" name="Jenis" type="text" placeholder="Jenis Ticket" value="<?=$row['jenis']; ?>" />
+                                    </div>
+                                    <div class="form-group">
+                                         <label>Deskripsi Ticket</label>
+                                         <input class="form-control" name="Deskripsi" type="text" placeholder="Deskripsi Ticket" value="<?=$row['deskripsi']; ?>"/>
+                                    </div>
+                                    <div class="form-group">
+                                         <label>Lampiran</label>
+                                         <input class="form-control" name="Lampiran" type="text" placeholder="Lampiran ticket" value="<?=$row['lampiran']; ?>"/>       
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-6 column">
+                                            <label>Status Tiket</label>
+                                            <select class="form-control" name="Status">
+                                                <option></option>
+                                                <option value="Diterima">Diterima</option>
+                                                <option value="Ditolak Properti">Ditolak</option>
+                                            </select>
+                                      </div>  
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-md-6 column">
+                                            <label>Tanggal Expired</label>
+                                            <input class="form-control datepicker" type="text" name="Expired" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+
+                                      <label>Pesan</label>
+                                      <textarea class="form-control" rows="2" name="Pesan"></textarea>
+                                   
+                                    </div>
+                                
+                                    <br>
+                                
+                                <button type="submit" id="formSubmit" class="btn btn-success btn-large pull-right">Submit</button>
+                                </form>
+                                <!--END EDIT Ticket form-->
+                              </div>
+                               </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!--END Modal For EDIT Ticket-->
+                    <? endforeach; ?>
                         </tbody> 
                     </table> 
-                      <? $this->load->view('includes/modal');?>
                   </div>
-                  <div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab">
-                    <p>Food truck fixie locavore, accusamus mcsweeney's marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee. Qui photo booth letterpress, commodo enim craft beer mlkshk aliquip jean shorts ullamco ad vinyl cillum PBR. Homo nostrud organic, assumenda labore aesthetic magna delectus mollit. Keytar helvetica VHS salvia yr, vero magna velit sapiente labore stumptown. Vegan fanny pack odio cillum wes anderson 8-bit, sustainable jean shorts beard ut DIY ethical culpa terry richardson biodiesel. Art party scenester stumptown, tumblr butcher vero sint qui sapiente accusamus tattooed echo park.</p>
-                  </div>
-                  <div role="tabpanel" class="tab-pane fade" id="dropdown1" aria-labelledby="dropdown1-tab">
-                    <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings gentrify squid 8-bit cred pitchfork. Williamsburg banh mi whatever gluten-free, carles pitchfork biodiesel fixie etsy retro mlkshk vice blog. Scenester cred you probably haven't heard of them, vinyl craft beer blog stumptown. Pitchfork sustainable tofu synth chambray yr.</p>
-                  </div>
-                  <div role="tabpanel" class="tab-pane fade" id="dropdown2" aria-labelledby="dropdown2-tab">
-                    <p>Trust fund seitan letterpress, keytar raw denim keffiyeh etsy art party before they sold out master cleanse gluten-free squid scenester freegan cosby sweater. Fanny pack portland seitan DIY, art party locavore wolf cliche high life echo park Austin. Cred vinyl keffiyeh DIY salvia PBR, banh mi before they sold out farm-to-table VHS viral locavore cosby sweater. Lomo wolf viral, mustache readymade thundercats keffiyeh craft beer marfa ethical. Wolf salvia freegan, sartorial keffiyeh echo park vegan.</p>
-                  </div>
-                </div>
+
               </div>
                 
            
@@ -141,22 +152,21 @@
     </div>
         
 </div>
-
+<script src="<?=base_url('assets/js/bootstrap-datepicker.js'); ?>"></script>
 <script>
-$('#myTab a').click(function (e) {
-  e.preventDefault()
-  $(this).tab('show')
-})
+
     
  $("#menu-toggle").click(function(e) {
     e.preventDefault();
     $("#wrapper").toggleClass("toggled");
 });
+    
+
 
 function test(x)
 {
     var confMsg =  confirm("apakah kamu yakin ingin menghapus data ini ?");
-    var deleteURL = '<?=site_url("admingrace/deleteRoom"); ?>'+'/'+x;
+    var deleteURL = '<?=site_url("admingrace/deleteTicket"); ?>'+'/'+x;
      if (confMsg == true)
      {
          console.log(deleteURL);
@@ -200,7 +210,7 @@ function loadTable()
                }
            })
            row+='<td><img class="img-responsive img-thumbnail img img-square" src="<?=base_url("files");?>'+'/'+ d["file"]+'" style="width:50px;height:50px;"/></td>';
-            row+='<td><button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editDormModal'+d['ticketid']+'" >edit</button> <button class="btn btn-sm btn-danger delete" name="roomid" value="'+d['ticketid']+'" onclick="return test()">delete</button></td>';
+            row+='<td><button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editTicketModal'+d['ticketid']+'" >manage</button> <button class="btn btn-sm btn-danger delete" name="ticketid" value="'+d['ticketid']+'" onclick="return test()">delete</button></td>';
 
            row+='</tr>';
            $('#roomTable tbody').fadeIn(1000).append(row);
@@ -210,6 +220,9 @@ function loadTable()
 };
     
 $(document).ready(function() {
+    $('.datepicker').datepicker({
+        format: 'yyyy-mm-dd'
+    });
     
     loadTable();
     
@@ -254,7 +267,7 @@ $(document).ready(function() {
       $('#editSucess').hide();
       $('#editError').hide();
 
-      var faction = '<?=site_url('admingrace/editRoom'); ?>';
+      var faction = '<?=site_url('admingrace/editTicket'); ?>';
       var fdata = form.serialize();
 
       $.post(faction, fdata, function(rdata) {
@@ -262,7 +275,7 @@ $(document).ready(function() {
           if (json.isSuccessful) {
               $('#editSuccessMessage').html(json.message);
               $('#editSuccess').show();
-              $('#editDormModal').modal('hide');
+              $('#editTicketModal').modal('hide');
               loadTable();
 
           } else {

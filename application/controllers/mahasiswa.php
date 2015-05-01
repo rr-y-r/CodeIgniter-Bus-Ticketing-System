@@ -19,12 +19,14 @@ class Mahasiswa extends CI_Controller
     }
     
     public function getTicketData(){
+        sleep(1);
         echo json_encode(array('ticketData'=>$this->ticketModel->get_user_ticket()));
     }
     
     public function index()
     {
-        $this->load->view('mahasiswa');
+        $data = $this->ticketModel->get_user_ticket();
+        $this->load->view('mahasiswa', array('ticketData'=>$data));
                 
     }
 
@@ -32,10 +34,11 @@ class Mahasiswa extends CI_Controller
     {
         sleep(1);
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('Jenis', 'Jenis', 'required|max_length[13]');
+        $this->form_validation->set_rules('Jenis', 'Jenis', 'required|max_length[32]');
         $this->form_validation->set_rules('Deskripsi', 'Deskripsi', 'required|max_length[32]');
         $this->form_validation->set_rules('Lampiran', 'Lampiran', 'required|max_length[100]');
         $this->form_validation->set_rules('Status', 'Status', 'required|max_length[100]');
+
         $this->form_validation->set_rules('file', 'file', 'required|max_length[100]');
         
         
@@ -72,6 +75,7 @@ class Mahasiswa extends CI_Controller
     
     public function deleteTicket($ticketid)
     {
+        sleep(1);
         $this->ticketModel->delete($ticketid);
     }
     
@@ -80,9 +84,12 @@ class Mahasiswa extends CI_Controller
     {
         sleep(1);
         $this->load->library('form_validation');
+        $this->form_validation->set_rules('Ticketid', 'Ticketid', 'required|max_length[13]');
         $this->form_validation->set_rules('Jenis', 'Jenis', 'required|max_length[13]');
-        $this->form_validation->set_rules('Keterangan', 'Keterangan', 'required|max_length[21]');
-        $this->form_validation->set_rules('Attachment', 'Attachment', 'required|max_length[21]');
+        $this->form_validation->set_rules('Deskripsi', 'Deskripsi', 'required|max_length[32]');
+        $this->form_validation->set_rules('Lampiran', 'Lampiran', 'required|max_length[100]');
+        $this->form_validation->set_rules('Status', 'Status', 'required|max_length[100]');
+        $this->form_validation->set_rules('title', 'title', 'required|max_length[100]');
         
         if ($this->form_validation->run() == FALSE) 
         {
@@ -91,11 +98,15 @@ class Mahasiswa extends CI_Controller
         } 
         else 
         {
-            //$is_added = $this->ticketModel->update(
-                
-            //);
+            $is_updated = $this->ticketModel->update(
+                $this->input->post('Ticketid'), 
+                $this->input->post('Jenis'), 
+                $this->input->post('Deskripsi'), 
+                $this->input->post('Lampiran'),
+                $this->input->post('Status')
+            );
             
-            if ($is_added) 
+            if ($is_updated) 
             {
                 $message = "ticket Nomor : <strong> ".$this->input->post('ticketid')."</strong> berhasil ditambahkan !";
                 $this->json_response(TRUE, $message);

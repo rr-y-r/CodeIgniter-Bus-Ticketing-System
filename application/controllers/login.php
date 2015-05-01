@@ -35,7 +35,7 @@ class Login extends CI_Controller
             $this->session->set_userdata($data);
             if($level == 'admin')
             {
-                redirect('admin');
+                redirect('admingrace');
             }
             else
             {

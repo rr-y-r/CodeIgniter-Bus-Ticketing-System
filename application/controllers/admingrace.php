@@ -24,74 +24,17 @@ class Admingrace extends CI_Controller
         return $this->session->userdata('is_logged_in');
     }
     
-    public function index()
-    {
-        $dorm = $this->roomModel->get_all();
-        //$data = json_encode($dorm);
-        $this->load->view('admingrace', array(
-            'dorm_room' => $dorm
-        ));
-    }
-    
-    public function getDormData()
-    {
-        echo json_encode(array('roomData'=>$this->roomModel->get_all()));
-    }
-    
-    public function getTicketData()
-    {
-        echo json_encode(array('ticket'=>$this->ticketModel->get_all()));
-    }
-    
-    public function addRoom()
+    public function editTicket()
     {
         sleep(1);
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('Nomor', 'Nomor', 'required|max_length[3]|numeric');
-        $this->form_validation->set_rules('Fasilitas', 'Fasilitas', 'required|max_length[32]|alpha_numeric');
-        $this->form_validation->set_rules('Kapasitas', 'Kapasitas', 'required|max_length[3]|numeric');
-        
-        if ($this->form_validation->run() == FALSE) 
-        {
-            $message = "<strong>Adding</strong> failed!";
-            $this->json_response(FALSE, $message);
-        } 
-        else 
-        {
-            $is_added = $this->roomModel->add(
-                $this->input->post('Nomor'), 
-                $this->input->post('Fasilitas'), 
-                $this->input->post('Kapasitas')
-            );
-            
-            if ($is_added) 
-            {
-                $message = "Kamar Nomor : <strong> ".$this->input->post('Nomor')."</strong> berhasil ditambahkan !";
-                $this->json_response(TRUE, $message);
-            } 
-            else 
-            {
-                $message = "Kamar Nomor : <strong> ".$this->input->post('Nomor')."</strong> sudah ada !";
-                $this->json_response(FALSE, $message);
-            }
-        }
-    }
-    
-    public function deleteRoom($nomor)
-    {
-        $this->roomModel->delete($nomor);
-    }
-    
-    
-    public function editRoom()
-    {
-        sleep(1);
-        $this->load->library('form_validation');
-        $this->form_validation->set_rules('Roomid', 'Roomid', 'required|max_length[3]|numeric');
-        $this->form_validation->set_rules('Nomor', 'Nomor', 'required|max_length[3]|numeric');
-        $this->form_validation->set_rules('Fasilitas', 'Fasilitas', 'required|max_length[32]|alpha_numeric');
-        $this->form_validation->set_rules('Kapasitas', 'Kapasitas', 'required|max_length[3]|numeric');
-        $this->form_validation->set_rules('Status', 'Status', 'required|max_length[20]|alpha_numeric');
+        $this->form_validation->set_rules('Ticketid', 'Ticketid', 'max_length[13]');
+        $this->form_validation->set_rules('Jenis', 'Jenis', 'max_length[13]');
+        $this->form_validation->set_rules('Deskripsi', 'Deskripsi', 'max_length[32]');
+        $this->form_validation->set_rules('Lampiran', 'Lampiran', 'max_length[255]');
+        $this->form_validation->set_rules('Status', 'Status', 'max_length[255]');
+        $this->form_validation->set_rules('Expired', 'Expired', 'max_length[100]');        
+        $this->form_validation->set_rules('Pesan', 'Pesan', 'max_length[100]');
         
         if ($this->form_validation->run() == FALSE) 
         {
@@ -100,27 +43,52 @@ class Admingrace extends CI_Controller
         } 
         else 
         {
-            $is_added = $this->roomModel->update(
-                $this->input->post('Roomid'),
-                $this->input->post('Nomor'), 
-                $this->input->post('Fasilitas'), 
-                $this->input->post('Kapasitas'),
-                $this->input->post('Status')
+            $is_updated = $this->ticketModel->update(
+                $this->input->post('Ticketid'), 
+                $this->input->post('Jenis'), 
+                $this->input->post('Deskripsi'), 
+                $this->input->post('Lampiran'),
+                $this->input->post('Status'),
+                $this->input->post('Expired'),
+                $this->input->post('Pesan')
+                
             );
             
-            if ($is_added) 
+            if ($is_updated) 
             {
-                $message = "Kamar Nomor : <strong> ".$this->input->post('Nomor')."</strong> berhasil ditambahkan !";
+                $message = "ticket Nomor : <strong> ".$this->input->post('Ticketid')."</strong> berhasil diubah !";
                 $this->json_response(TRUE, $message);
             } 
             else 
             {
-                $message = "Kamar Nomor : <strong> ".$this->input->post('Nomor')."</strong> Edit Error, silahkan cek data anda !";
+                $message = "ticket Nomor : <strong> ".$this->input->post('Ticketid')."</strong> Edit Error, silahkan cek data anda !";
                 $this->json_response(FALSE, $message);
             }
         }
     }
     
+    public function index()
+    {
+        $ticket = $this->ticketModel->get_all();
+        //$data = json_encode($dorm);
+        $this->load->view('admingrace', array(
+            'ticketData' => $ticket
+        ));
+    }
+    
+        public function deleteTicket($ticketid)
+    {
+        sleep(1);
+        $this->ticketModel->delete($ticketid);
+    }
+    
+
+    
+    public function getTicketData()
+    {
+        echo json_encode(array('ticket'=>$this->ticketModel->get_all()));
+    }
+ 
     private function json_response($successful, $message){
         echo json_encode(array(
             'isSuccessful' => $successful,

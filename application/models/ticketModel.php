@@ -66,19 +66,24 @@ class TicketModel extends CI_Model
         $this->db->delete('ticket');
     }
 
-    public function updateAdmin($ticketid,$jenis,$deskripsi,$lampiran,$status)
+    public function update($ticketid,$jenis,$deskripsi,$lampiran,$status,$expired,$pesan)
     {
         $ticket =  array(
-            'ticketid' => $ticketid,
             'jenis' => $jenis, 
             'deskripsi' => $deskripsi, 
             'lampiran' => $lampiran,
-            'status' => $status
+            'status' => $status,
+            'expired' => $expired,
+            'pesan' => $pesan
         );
         
-        $this->db->where('ticketid',$ticketid);
-        $this->db->update('ticket', $ticket);
+        $this->db->where('ticketid',$ticketid)
+                ->update('ticket', $ticket);
+        
+        return TRUE;
     }
+    
+    
 
     
 }
