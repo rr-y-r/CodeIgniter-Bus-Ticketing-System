@@ -18,11 +18,10 @@ class TicketModel extends CI_Model
     
     public function get_all()
     {
-        $ticket = $this->db->select()
-                ->get('ticket')
-                ->result_array();
-        
-        return $ticket;
+        return $this->db->select('*')
+            ->order_by('ticketid')
+            ->get('ticket')
+            ->result_array();
     }
     
      public function get_user_ticket()

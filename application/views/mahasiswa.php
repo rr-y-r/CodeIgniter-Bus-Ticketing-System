@@ -13,7 +13,12 @@
 
                     <li>
                         <span class="text-success">
-                            <?=anchor('admin', $this->session->userdata('email')); ?> 
+                            <?=anchor('mahasiswa', $this->session->userdata('email')); ?> 
+                        </span>
+                    </li>
+                    <li>
+                        <span class="text-success">
+                            <?=anchor('mahasiswa', $this->session->userdata('nim')); ?> 
                         </span>
                     </li>
                     <li>
@@ -32,7 +37,7 @@
                         <a href="#manual" id="manual-tab" role="tab" data-toggle="tab" aria-controls="manual" aria-expanded="true">Manual Pengguna</a>
                     </li>
                   <li role="presentation" class="">
-                      <a href="#data" id="data-tab" role="tab" data-toggle="tab" aria-controls="data" aria-expanded="true">Data Ticket</a>
+                      <a href="#data" id="data-tab" role="tab" data-toggle="tab" aria-controls="data" aria-expanded="true">Input Ticket</a>
                     </li>
                   <li role="presentation" class="">
                       <a href="#profile" role="tab" id="profile-tab" data-toggle="tab" aria-controls="profile" aria-expanded="false">Tiket yang selesai di proses</a>
@@ -49,16 +54,39 @@
                 </ul>
                     
                 <div id="myTabContent" class="tab-content">
-                <div role="tabpanel" class="tab-pane fade active in" id="manual" aria-labelledby="manual-tab"></div>
+                <div role="tabpanel" class="tab-pane fade active in" id="manual" aria-labelledby="manual-tab">
+                    <p>
+                    <ul><b><h5>Pengisian form ticket membutuhkan pengisian semua data dengan ketentuan berikut:</h5></b></ul>
+                    <li>
+                       Memberikan data spesifik, lengkap, dan jelas.
+                    </li>
+                    <li>
+                       Mendeskripsikan maksud pengajuan tiket.
+                    </li>
+                    <li>
+                       Menjelaskan kegunaan dan tujuan ticket.
+                    </li>
+                    <li>
+                       Melampirkan data diri yang lengkap dan jelas berupa file pada form, maximal 1 file.
+                    </li>
+                    <li>
+                       File yang diunggah dapat berextensi : PDF, JPG, PNG
+                    </li>
+                    <li>
+                       untuk peminjaman : Menjelaskan kegunaan dan lama waktu peminjaman.
+                    </li>
+                    </p>
+                </div>
                   <div role="tabpanel" class="tab-pane fade" id="data" aria-labelledby="data-tab">
 
                    <div id="notif" class="row" style="display: none">
                   <div id="notif" class="alert alert-danger text-center"></div>
             </div>
-            <table id="roomTable" class="table table-hover table-striped table-condensed"> 
+                      <h4 class="text-center">Data ticket yang telah di apply</h4>
+            <table id="roomTable" class="table table-hover table-bordered table-striped table-condensed"> 
                 <thead style="background-color:#FF6666;"> 
                 <tr> 
-                    <th>nomor ticket</th> 
+                    <th>No.</th> 
                     <th>Jenis</th> 
                     <th>Deskripsi</th> 
                     <th>lampiran</th> 
@@ -142,16 +170,19 @@
                      
                   </div>
                   <div role="tabpanel" class="tab-pane fade" id="profile" aria-labelledby="profile-tab">
-                    <table id="roomTable" class="table table-hover table-striped table-condensed"> 
+                    <table id="processedTable" class="table table-hover table-bordered table-striped table-condensed"> 
                 <thead style="background-color:#FF6666;"> 
                 <tr> 
-                    <th>nomor ticket</th> 
+                    <th>ID Ticket</th> 
                     <th>Jenis</th> 
+                    <th>ID user</th> 
                     <th>Deskripsi</th> 
-                    <th>lampiran</th> 
+                    <th>Lampiran</th> 
                     <th>Status</th> 
-                    <th>file</th> 
-                    <th>Action</th> 
+                    <th>Expired</th> 
+                    <th>Pesan</th> 
+                    <th>Attachment</th> 
+                    <th>Tool</th>
                 </tr> 
                 </thead> 
                 <tbody> 
@@ -198,17 +229,22 @@ function loadTable()
     var url = '<?=site_url("mahasiswa/getTicketData"); ?>';
     $.get(url, function(data){
         var ticketData = jQuery.parseJSON(data);
-        $.each(ticketData['ticketData'], function (i,d) {
+        $.each(ticketData['userticketData'], function (i,d) {
 
            if(d["status"]=='On Progress')
+            {
+                var row='<tr class="info">';
+                row+='<tr class="info">';
+            }
+            if(d["status"]=='Ditolak')
             {
                 var row='<tr class="danger">';
                 row+='<tr class="danger">';
             }
-            else
+            if(d["status"]=='Diterima')
             {
-                var row='<tr>';
-                row+='<tr>';
+                var row='<tr class="success">';
+                row+='<tr class="success">';
             }
            $.each(d, function(j, e) {
                if(e!=d["file"])
@@ -221,10 +257,65 @@ function loadTable()
                }
            })
            row+='<td><img class="img-responsive img-thumbnail img img-square" src="<?=base_url("files");?>'+'/'+ d["file"]+'" style="width:50px;height:50px;"/></td>';
-            row+='<td><button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editTicketModal'+d['ticketid']+'" onclick="return refresh_files()">edit</button> <button class="btn btn-sm btn-danger delete" name="roomid" value="'+d['ticketid']+'" onclick="return test('+d['ticketid']+')">Hapus</button></td>';
-
+            if(d['status']!="diterima")
+            {
+            row+='<td><span class="glyphicon glyphicon-minus text-center"></span></td>';
+            }
+            else
+            {
+            row+='<td><button class="btn btn-sm btn-danger delete" name="roomid" value="'+d['ticketid']+'" onclick="return test('+d['ticketid']+')">Hapus</button></td>';
+            };
            row+='</tr>';
            $('#roomTable tbody').fadeIn(1000).append(row);
+
+        })
+    }); 
+};
+    
+    function loadProcessedTable()
+{
+    $('#processedTable tbody').fadeOut(200).empty();
+    var url = '<?=site_url("mahasiswa/getProcessedTicketData"); ?>';
+    $.get(url, function(data){
+        var ticketData = jQuery.parseJSON(data);
+        $.each(ticketData['processedticketData'], function (i,d) {
+
+           if(d["status"]=='On Progress')
+            {
+                var row='<tr class="info">';
+                row+='<tr class="info">';
+            }
+            if(d["status"]=='Ditolak')
+            {
+                var row='<tr class="danger">';
+                row+='<tr class="danger">';
+            }
+            if(d["status"]=='Diterima')
+            {
+                var row='<tr class="success">';
+                row+='<tr class="success">';
+            }
+           $.each(d, function(j, e) {
+               if(e!=d["file"])
+               {
+                   row+='<td>'+e+'</td>';
+                }
+               else
+               {
+                   
+               }
+           })
+           row+='<td><img class="img-responsive img-thumbnail img img-square" src="<?=base_url("files");?>'+'/'+ d["file"]+'" style="width:50px;height:50px;"/></td>';
+            if(d['status']!="diterima")
+            {
+            row+='<td><span class="glyphicon glyphicon-minus text-center"></span></td>';
+            }
+            else
+            {
+            row+='<td><button class="btn btn-sm btn-danger delete" name="roomid" value="'+d['ticketid']+'" onclick="return test('+d['ticketid']+')">Hapus</button></td>';
+            };
+           row+='</tr>';
+           $('#processedTable tbody').fadeIn(1000).append(row);
 
         })
     }); 
@@ -308,6 +399,7 @@ $(function() {
 });
     
 $(document).ready(function() {
+    loadProcessedTable();
     loadTable();
     
     $('.formEdit').submit(function() {

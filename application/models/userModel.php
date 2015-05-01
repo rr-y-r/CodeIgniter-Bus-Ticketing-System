@@ -21,6 +21,12 @@ class UserModel extends CI_Model
         $row = $this->db->get_where('user', array('email' => $email))->row();
         return $row->userid;
     }
+    
+    public function get_nim($email)
+    {
+        $row = $this->db->get_where('user', array('email' => $email))->row();
+        return $row->nim;
+    }
 /*
     public function get_names($userid)
     {

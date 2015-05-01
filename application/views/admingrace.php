@@ -16,7 +16,7 @@
 
                     <li>
                         <span class="text-success">
-                            <?=anchor('admin', $this->session->userdata('email')); ?> 
+                            <?=anchor('admingrace', $this->session->userdata('email')); ?> 
                         </span>
                     </li>
                     <li>
@@ -109,7 +109,7 @@
                                             <select class="form-control" name="Status">
                                                 <option></option>
                                                 <option value="Diterima">Diterima</option>
-                                                <option value="Ditolak Properti">Ditolak</option>
+                                                <option value="Ditolak">Ditolak</option>
                                             </select>
                                       </div>  
                                     </div>

@@ -20,13 +20,18 @@ class Mahasiswa extends CI_Controller
     
     public function getTicketData(){
         sleep(1);
-        echo json_encode(array('ticketData'=>$this->ticketModel->get_user_ticket()));
+        echo json_encode(array('userticketData'=>$this->ticketModel->get_user_ticket()));
+    }
+    
+    public function getProcessedTicketData(){
+        sleep(1);
+        echo json_encode(array('processedticketData'=>$this->ticketModel->get_all()));
     }
     
     public function index()
     {
         $data = $this->ticketModel->get_user_ticket();
-        $this->load->view('mahasiswa', array('ticketData'=>$data));
+        $this->load->view('mahasiswa', array('userticketData'=>$data));
                 
     }
 

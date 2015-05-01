@@ -22,13 +22,14 @@ class Login extends CI_Controller
             $email = $this->input->post('email');
             $userid = $this->userModel->get_id($email);
             $level = $this->userModel->isAdmin($email);
+            $nim = $this->userModel->get_nim($email);
             
-            echo $level;
 
             $data = array(
                 'email' => $email,
                 'userid' => $userid,
                 'is_logged_in' => TRUE,
+                'nim' => $nim,
                 'level' => $level
             );
 
