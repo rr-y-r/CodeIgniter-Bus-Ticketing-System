@@ -28,9 +28,9 @@ class Admingrace extends CI_Controller
     {
         sleep(1);
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('Ticketid', 'Ticketid', 'max_length[13]');
-        $this->form_validation->set_rules('Jenis', 'Jenis', 'max_length[13]');
-        $this->form_validation->set_rules('Deskripsi', 'Deskripsi', 'max_length[32]');
+        $this->form_validation->set_rules('Ticketid', 'Ticketid', 'max_length[255]');
+        $this->form_validation->set_rules('Jenis', 'Jenis', 'max_length[255]');
+        $this->form_validation->set_rules('Deskripsi', 'Deskripsi', 'max_length[255]');
         $this->form_validation->set_rules('Lampiran', 'Lampiran', 'max_length[255]');
         $this->form_validation->set_rules('Status', 'Status', 'max_length[255]');
         $this->form_validation->set_rules('Expired', 'Expired', 'max_length[100]');        

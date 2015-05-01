@@ -210,7 +210,7 @@ function loadTable()
                }
            })
            row+='<td><img class="img-responsive img-thumbnail img img-square" src="<?=base_url("files");?>'+'/'+ d["file"]+'" style="width:50px;height:50px;"/></td>';
-            row+='<td><button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editTicketModal'+d['ticketid']+'" >manage</button> <button class="btn btn-sm btn-danger delete" name="ticketid" value="'+d['ticketid']+'" onclick="return test()">delete</button></td>';
+            row+='<td><button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editTicketModal'+d['ticketid']+'" >manage</button> <button class="btn btn-sm btn-danger delete" name="ticketid" value="'+d['ticketid']+'" onclick="return test('+d['ticketid']+')">delete</button></td>';
 
            row+='</tr>';
            $('#roomTable tbody').fadeIn(1000).append(row);

@@ -114,7 +114,7 @@
 
                                                 <div class="upload_file">
                                                     <div class="form-group">
-                                                        <div class="col-md-7 column">
+                                                        <div class="col-md-6 column">
                                                             <div class="form-group">
                                                                 <label for="userfile"><h5>Attachment File Upload</h5></label>
                                                                 <br>
@@ -125,7 +125,7 @@
                                                             <button class="btn btn-success btn-sm pull-right upload" type="button" name="upload" id="upload" >upload</button>
                                                             <br>
                                                         </div>
-                                                        <div class="col-md-7 column">
+                                                        <div class="col-md-6 column">
                                                             <label for="userfile"><h5>uploaded file</h5></label>
                                                             <div id="files"></div>
 
@@ -221,7 +221,7 @@ function loadTable()
                }
            })
            row+='<td><img class="img-responsive img-thumbnail img img-square" src="<?=base_url("files");?>'+'/'+ d["file"]+'" style="width:50px;height:50px;"/></td>';
-            row+='<td><button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editTicketModal'+d['ticketid']+'" onclick="return refresh_files()">edit</button> <button class="btn btn-sm btn-danger delete" name="roomid" value="'+d['ticketid']+'" onclick="return test()">Hapus</button></td>';
+            row+='<td><button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editTicketModal'+d['ticketid']+'" onclick="return refresh_files()">edit</button> <button class="btn btn-sm btn-danger delete" name="roomid" value="'+d['ticketid']+'" onclick="return test('+d['ticketid']+')">Hapus</button></td>';
 
            row+='</tr>';
            $('#roomTable tbody').fadeIn(1000).append(row);
@@ -230,11 +230,11 @@ function loadTable()
     }); 
 };
     
-function test()
+function test(x)
 {
     var confMsg =  confirm("apakah kamu yakin ingin menghapus data ini ?");
-    var ticketData = $('.delete').val();
-    var deleteURL = '<?=site_url("admin/deleteTicket"); ?>'+'/'+ticketData;
+
+    var deleteURL = '<?=site_url("mahasiswa/deleteTicket"); ?>'+'/'+x;
      if (confMsg == true)
      {
          console.log(deleteURL);
