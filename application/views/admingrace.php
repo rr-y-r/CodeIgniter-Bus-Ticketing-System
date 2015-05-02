@@ -1,6 +1,6 @@
 <? $this->load->view('includes/header');?>
 <a href="#" class="glyphicon glyphicon-th-list toogleside pull-right" id="menu-toggle"></a>
-<h3 class="text-center wuaso">Admin CMS (Coeg Management System)</h3>
+<h3 class="text-center wuaso">Sistem Manajemen Ticket</h3>
 <div class="container">
     
     <div class="content" style="display:none">
@@ -31,7 +31,7 @@
             
             <div id="showdata"></div>
                 <br>
-            <h4 class="text-center headercoeg">coeg</h4>
+            <h4 class="text-center headercoeg">Sistem Informasi Manajemen Tiket</h4>
             <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
                 <ul id="myTab" class="nav nav-tabs" role="tablist">
                   <li role="presentation" class="active"><a href="#home" id="home-tab" role="tab" data-toggle="tab" aria-controls="home" aria-expanded="true">Manajemen Ticket</a></li>
@@ -48,7 +48,7 @@
                 </ul>
                 <div id="myTabContent" class="tab-content">
                   <div role="tabpanel" class="tab-pane fade active in" id="home" aria-labelledby="home-tab">
-<h4 class="text-center">table coeg</h4>
+<h4 class="text-center">Data Tiket Yang Telah Di-apply</h4>
                      <table id="roomTable" class="table table-hover table-striped table-condensed"> 
                         <thead style="background-color:#FF6666;"> 
                         <tr> 
@@ -188,16 +188,23 @@ function loadTable()
         var data = ticketData['ticket'];
         $.each(ticketData['ticket'], function (i,d) {
             console.log(d["status"]);
+
             if(d["status"]=='On Progress')
+            {
+                var row='<tr class="warning">';
+                row+='<tr class="warning">';
+            }
+            if(d["status"]=='Ditolak')
             {
                 var row='<tr class="danger">';
                 row+='<tr class="danger">';
             }
-            else
+            if(d["status"]=='Diterima')
             {
-                var row='<tr>';
-                row+='<tr>';
+                var row='<tr class="success">';
+                row+='<tr class="success">';
             }
+
            
            $.each(d, function(j, e) {
                if(e!=d["file"])
@@ -210,7 +217,7 @@ function loadTable()
                }
            })
            row+='<td><img class="img-responsive img-thumbnail img img-square" src="<?=base_url("files");?>'+'/'+ d["file"]+'" style="width:50px;height:50px;"/></td>';
-            row+='<td><button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editTicketModal'+d['ticketid']+'" >manage</button> <button class="btn btn-sm btn-danger delete" name="ticketid" value="'+d['ticketid']+'" onclick="return test('+d['ticketid']+')">delete</button></td>';
+            row+='<td><button class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editTicketModal'+d['ticketid']+'" >PROSES</button> <button class="btn btn-sm btn-danger delete" name="ticketid" value="'+d['ticketid']+'" onclick="return test('+d['ticketid']+')">HAPUS</button></td>';
 
            row+='</tr>';
            $('#roomTable tbody').fadeIn(1000).append(row);

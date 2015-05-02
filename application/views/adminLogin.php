@@ -1,19 +1,18 @@
 <? $this->load->view('includes/header');?>
-<body>
-  <body background="<?=base_url('assets/img/asrama2.jpg'); ?>" background-repeat: no-repeat>
+<body style="background-color:#303030;">
 
-<div style= "margin-left:60px; margin-top:150px; ">
-<div class="container" >
+<div style= "margin-left:35%; margin-top:150px; ">
+<div class="container-fluid" >
+    <div class="col-md-6">
   <form class="form-signin" role="form" action="<?=site_url('login/loginCheck'); ?>" method="post" accept-charset="utf-8">
-    <h2 class="form-signin-heading">Please Input Your Login Credential</h2>
+    <h2 class="form-signin-heading text-center" style="color:#fff;">Login Sistem Ticketing</h2>
     <input class="form-control" name="email" placeholder="Email" required maxlength="40" autofocus>
     <input class="form-control" type="password" name="pwd" placeholder="Password" required maxlength="20" />
     <label class="checkbox">
       <input value="remember-me" type="checkbox"> Remember me
     </label>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Signin</button>
-      <a href="<?=site_url('signUp'); ?>" class="btn btn-lg btn-info btn-block"><i class="icon-arrow-right icon-white"></i>SignUp Now</a>
-
+    <button class="btn btn-lg btn-primary btn-block" style="background-color:#2A2A2A;" type="submit">Signin</button>
+      
     <? if (isset($error)): ?>
       <div class="row">
 
@@ -27,6 +26,7 @@
 
 </div>
 </div>
+    </div>
 </body>
 </html>
 

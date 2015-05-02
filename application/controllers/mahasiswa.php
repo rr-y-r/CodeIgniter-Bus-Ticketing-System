@@ -25,7 +25,7 @@ class Mahasiswa extends CI_Controller
     
     public function getProcessedTicketData(){
         sleep(1);
-        echo json_encode(array('processedticketData'=>$this->ticketModel->get_all()));
+        echo json_encode(array('processedticketData'=>$this->ticketModel->get_processed()));
     }
     
     public function index()
@@ -39,10 +39,10 @@ class Mahasiswa extends CI_Controller
     {
         sleep(1);
         $this->load->library('form_validation');
-        $this->form_validation->set_rules('Jenis', 'Jenis', 'required|max_length[32]');
-        $this->form_validation->set_rules('Deskripsi', 'Deskripsi', 'required|max_length[32]');
-        $this->form_validation->set_rules('Lampiran', 'Lampiran', 'required|max_length[100]');
-        $this->form_validation->set_rules('Status', 'Status', 'required|max_length[100]');
+        $this->form_validation->set_rules('Jenis', 'Jenis', 'required|max_length[254]');
+        $this->form_validation->set_rules('Deskripsi', 'Deskripsi', 'required|max_length[254]');
+        $this->form_validation->set_rules('Lampiran', 'Lampiran', 'required|max_length[254]');
+        $this->form_validation->set_rules('Status', 'Status', 'required|max_length[254]');
 
         $this->form_validation->set_rules('file', 'file', 'required|max_length[100]');
         
@@ -90,11 +90,11 @@ class Mahasiswa extends CI_Controller
         sleep(1);
         $this->load->library('form_validation');
         $this->form_validation->set_rules('Ticketid', 'Ticketid', 'required|max_length[13]');
-        $this->form_validation->set_rules('Jenis', 'Jenis', 'required|max_length[13]');
-        $this->form_validation->set_rules('Deskripsi', 'Deskripsi', 'required|max_length[32]');
-        $this->form_validation->set_rules('Lampiran', 'Lampiran', 'required|max_length[100]');
-        $this->form_validation->set_rules('Status', 'Status', 'required|max_length[100]');
-        $this->form_validation->set_rules('title', 'title', 'required|max_length[100]');
+        $this->form_validation->set_rules('Jenis', 'Jenis', 'required|max_length[254]');
+        $this->form_validation->set_rules('Deskripsi', 'Deskripsi', 'required|max_length[254]');
+        $this->form_validation->set_rules('Lampiran', 'Lampiran', 'required|max_length[254]');
+        $this->form_validation->set_rules('Status', 'Status', 'max_length[254]');
+        $this->form_validation->set_rules('title', 'title', 'max_length[254]');
         
         if ($this->form_validation->run() == FALSE) 
         {

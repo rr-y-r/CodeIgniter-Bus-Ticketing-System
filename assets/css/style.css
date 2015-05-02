@@ -16,8 +16,8 @@ html {
     height: 100%;
 }
 .wuaso{
-    background: #FF3333;
-    color:#FF6666;
+    background: #3C3C3C;
+    color:#fff;
     position: fixed;
     width: 100%;
     text-align: center;
@@ -35,7 +35,7 @@ h5,
 h6 {
     margin: 0 0;
     text-transform: uppercase;
-    font-family: Montserrat,sans-serif;
+    font-family: 'Montserrat',sans-serif;
     font-weight: 700;
     letter-spacing: 1px;
     padding-bottom: 15px;

@@ -1,6 +1,6 @@
 <? $this->load->view('includes/header'); ?>
 <a href="#" class="glyphicon glyphicon-th-list toogleside pull-right" id="menu-toggle"></a>
-<h3 class="text-center wuaso">Sistem penguras waktu tidur</h3>
+<h3 class="text-center wuaso">Sistem Pengajuan Tiket</h3>
 <div class="container">
 	<div class="row clearfix">
 		<div class="col-md-12 column">
@@ -8,7 +8,7 @@
 
     <!-- Sidebar -->
             <div id="sidebar-wrapper">
-                <img class="img-circle img-responsive img-brand" src="<?=base_url('files/1.jpg'); ?>"/>
+                <img class="img-circle img-responsive img-brand" src="<?=base_url('files/3.jpg'); ?>"/>
                 <ul class="sidebar-nav">
 
                     <li>
@@ -32,7 +32,9 @@
             <br>
                 
                 <div class="bs-example bs-example-tabs" role="tabpanel" data-example-id="togglable-tabs">
+                    <a href="#" class="glyphicon glyphicon-refresh pull-right" style="font-weight:800;font-size:20px;font-face:'Montserrat',sans-serif;" id="refreshData"></a>
                 <ul id="myTab" class="nav nav-tabs" role="tablist">
+                    
                     <li role="presentation" class="active">
                         <a href="#manual" id="manual-tab" role="tab" data-toggle="tab" aria-controls="manual" aria-expanded="true">Manual Pengguna</a>
                     </li>
@@ -221,6 +223,12 @@ $("#menu-toggle").click(function(e) {
     e.preventDefault();
     $("#wrapper").toggleClass("toggled");
 });
+    
+$("#refreshData").click(function(e) {
+    e.preventDefault();
+    loadTable();
+    loadProcessedTable();
+});
 
     
 function loadTable()
@@ -233,8 +241,8 @@ function loadTable()
 
            if(d["status"]=='On Progress')
             {
-                var row='<tr class="info">';
-                row+='<tr class="info">';
+                var row='<tr class="warning">';
+                row+='<tr class="warning">';
             }
             if(d["status"]=='Ditolak')
             {
@@ -251,19 +259,20 @@ function loadTable()
                {
                    row+='<td>'+e+'</td>';
                 }
+               
                else
                {
                    
                }
            })
            row+='<td><img class="img-responsive img-thumbnail img img-square" src="<?=base_url("files");?>'+'/'+ d["file"]+'" style="width:50px;height:50px;"/></td>';
-            if(d['status']!="diterima")
+            if(d['status']=="Diterima")
             {
             row+='<td><span class="glyphicon glyphicon-minus text-center"></span></td>';
             }
             else
             {
-            row+='<td><button class="btn btn-sm btn-danger delete" name="roomid" value="'+d['ticketid']+'" onclick="return test('+d['ticketid']+')">Hapus</button></td>';
+            row+='<td><button class="btn btn-sm btn-danger delete" name="roomid" value="'+d['ticketid']+'" onclick="return test('+d['ticketid']+')">Batalkan</button></td>';
             };
            row+='</tr>';
            $('#roomTable tbody').fadeIn(1000).append(row);
@@ -272,7 +281,7 @@ function loadTable()
     }); 
 };
     
-    function loadProcessedTable()
+function loadProcessedTable()
 {
     $('#processedTable tbody').fadeOut(200).empty();
     var url = '<?=site_url("mahasiswa/getProcessedTicketData"); ?>';
@@ -282,8 +291,8 @@ function loadTable()
 
            if(d["status"]=='On Progress')
             {
-                var row='<tr class="info">';
-                row+='<tr class="info">';
+                var row='<tr class="warning">';
+                row+='<tr class="warning">';
             }
             if(d["status"]=='Ditolak')
             {
@@ -296,7 +305,7 @@ function loadTable()
                 row+='<tr class="success">';
             }
            $.each(d, function(j, e) {
-               if(e!=d["file"])
+               if(e!=d["file"] )
                {
                    row+='<td>'+e+'</td>';
                 }

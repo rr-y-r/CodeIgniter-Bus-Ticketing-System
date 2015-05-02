@@ -24,6 +24,16 @@ class TicketModel extends CI_Model
             ->result_array();
     }
     
+    public function get_processed()
+    {
+        return $this->db->select('*')
+            ->where('status = "Diterima" OR status="Ditolak"')
+            ->order_by('ticketid')
+            ->get('ticket')
+            
+            ->result_array();
+    }
+    
      public function get_user_ticket()
     {
         return $this->db->select('ticketid,jenis,deskripsi,lampiran,file,status')

@@ -33,8 +33,8 @@ class Admingrace extends CI_Controller
         $this->form_validation->set_rules('Deskripsi', 'Deskripsi', 'max_length[255]');
         $this->form_validation->set_rules('Lampiran', 'Lampiran', 'max_length[255]');
         $this->form_validation->set_rules('Status', 'Status', 'max_length[255]');
-        $this->form_validation->set_rules('Expired', 'Expired', 'max_length[100]');        
-        $this->form_validation->set_rules('Pesan', 'Pesan', 'max_length[100]');
+        $this->form_validation->set_rules('Expired', 'Expired', 'max_length[254]');        
+        $this->form_validation->set_rules('Pesan', 'Pesan', 'max_length[254]');
         
         if ($this->form_validation->run() == FALSE) 
         {
